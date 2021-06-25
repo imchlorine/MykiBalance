@@ -46,7 +46,7 @@ async function createWidget(card) {
     let rangeTxt = ""
     let rangeColor = ""
     let balanceTxt = mykiBalance < 0 ? "- $" + mykiBalance.replace(/-/, "") : "$" + mykiBalance
-    let mykiPass = card["Product"]
+    let mykiPass = card["Product"] || []
 
     if (config.runsWithSiri) {
         Speech.speak("You have " + balanceTxt + " left in your Myki money!")

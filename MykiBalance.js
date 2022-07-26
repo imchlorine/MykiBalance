@@ -29,7 +29,7 @@ async function createWidget(card) {
 
     if (card["code"] != 1) {
         let alertMessage = widget.addText(card["message"])
-        alertMessage.font = Font.boldSystemFont(14)
+        alertMessage.font = new Font("AppleSDGothicNeo-bold", 14)
         alertMessage.textColor = new Color("#ff0000")
         return widget
     }
@@ -93,25 +93,26 @@ async function createWidget(card) {
 
     let mykiUpdateTime = widget.addStack()
     let updateTxt = mykiUpdateTime.addText("")
-    updateTxt.font = Font.boldSystemFont(10)
+    // updateTxt.font = new Font("AppleSDGothicNeo-bold", 10)
+    updateTxt.font = new Font("AppleSDGothicNeo-Light", 10)
     updateTxt.textColor = new Color("#eeeeee")
 
     let updateTime = mykiUpdateTime.addText(dateTxt)
-    updateTime.font = Font.boldSystemFont(10)
+    updateTime.font = new Font("AppleSDGothicNeo-bold", 10)
     updateTime.textColor = new Color("#eeeeee")
 
     let mykiTitle = widget.addStack()
     mykiTitle.centerAlignContent()
 
     let mykiLogo = mykiTitle.addText("•••• " + cardNumber.slice(-5,-1) + " " + cardNumber.slice(-1))
-    mykiLogo.font = Font.boldSystemFont(20)
+    mykiLogo.font = new Font("AppleSDGothicNeo-bold", 16)
     mykiLogo.textColor = new Color("#ffffff")
     mykiTitle.addSpacer()
 
     let mykiCode = mykiTitle.addText("Top Up")
     let mykiSymbol = mykiTitle.addText(" >")
-    mykiCode.font = Font.boldSystemFont(20)
-    mykiSymbol.font = Font.boldSystemFont(20)
+    mykiCode.font = new Font("AppleSDGothicNeo-bold", 16)
+    mykiSymbol.font = new Font("AppleSDGothicNeo-bold", 16)
     mykiSymbol.textColor = new Color("#d92b26")
     mykiCode.textColor = new Color("#ffffff")
     mykiCode.url = "googlechrome://www.ptv.vic.gov.au/tickets/myki/#topup"
@@ -121,28 +122,28 @@ async function createWidget(card) {
     if (mykiPass.length > 0) {
         let middleViewTitle = widget.addStack()
         let moneyTitle = middleViewTitle.addText("myki money")
-        moneyTitle.font = Font.boldSystemFont(12)
+        moneyTitle.font = new Font("AppleSDGothicNeo-bold", 12)
         moneyTitle.textColor = new Color("#eeeeee")
         middleViewTitle.addSpacer()
 
         let passTitle = middleViewTitle.addText("myki pass")
-        passTitle.font = Font.boldSystemFont(12)
+        passTitle.font = new Font("AppleSDGothicNeo-bold", 12)
         passTitle.textColor = new Color("#eeeeee")
     }
 
     let middleView = widget.addStack()
     let balanceTitleSign = middleView.addText(balanceSign)
     balanceTitleSign.textColor = new Color("#c2d840")
-    balanceTitleSign.font = Font.mediumSystemFont(30)
+    balanceTitleSign.font = new Font("AppleSDGothicNeo-Regular", 30)
     let balanceTitle = middleView.addText(mykiBalanceValue)
-    balanceTitle.font = Font.boldSystemFont(30)
+    balanceTitle.font = new Font("AppleSDGothicNeo-Regular", 30)
     balanceTitle.textColor = new Color("#ffffff")
     middleView.addSpacer()
 
     if (mykiPass.length > 0) {
         let daysRemaining = mykiPass[0]["daysRemaining"].toString()
         let daysRemainingTitle = middleView.addText(daysRemaining)
-        daysRemainingTitle.font = Font.boldSystemFont(40)
+        daysRemainingTitle.font = new Font("AppleSDGothicNeo-bold", 40)
         daysRemainingTitle.textColor = new Color("#eeeeee")
     }
 
@@ -154,12 +155,12 @@ async function createWidget(card) {
 
     let expireText = bottomView.addText("Expiry: ")
     expireText.textColor = new Color("#000000")
-    expireText.font = Font.regularSystemFont(10)
+    expireText.font = new Font("AppleSDGothicNeo-regular", 10)
     expire_df = new DateFormatter()
     expire_df.useMediumDateStyle()
     let expireDateStr = expire_df.string(new Date(card["mykiCardExpiryDate"]))
     let expireDate = bottomView.addText(expireDateStr)
-    expireDate.font = Font.boldSystemFont(10)
+    expireDate.font = new Font("AppleSDGothicNeo-bold", 10)
     expireDate.textColor = new Color("#000000")
     bottomView.addSpacer()
 
@@ -177,7 +178,7 @@ async function createWidget(card) {
     })
     bottomView.addSpacer()
     let travelType = bottomView.addText(passengerTxt)
-    travelType.font = Font.boldSystemFont(10)
+    travelType.font = new Font("AppleSDGothicNeo-bold", 10)
     travelType.textColor = new Color("#000000")
     widget.addSpacer()
 

@@ -1,5 +1,5 @@
 # MykiBalance  
-Fetch Myki Balance with Scriptable, add to iOS 14 Widget.    
+Fetch Myki Balance with Scriptable, add to iOS Widget.    
 
 
 **Important! This Widget is not affiliated to PTV or Myki. For personal use only.**

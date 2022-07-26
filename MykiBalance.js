@@ -45,8 +45,6 @@ async function createWidget(card) {
     let mykiBalance = card["mykiBalance"]
     // force balance to be 2 decimal places
     let mykiBalanceValue = parseFloat(mykiBalance).toFixed(2).toString()
-    let rangeTxt = ""
-    let rangeColor = ""
     let balanceSign = mykiBalance < 0 ? "- $" + mykiBalance.replace(/-/, "") : "$"
     let balanceTxt = balanceSign + mykiBalance
     let mykiPass = card["Product"] || []

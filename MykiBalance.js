@@ -29,7 +29,7 @@ async function createWidget(card) {
 
     if (card["code"] != 1) {
         let alertMessage = widget.addText(card["message"])
-        alertMessage.font = Font.boldSystemFont(14)
+        alertMessage.font = new Font("AppleSDGothicNeo-bold", 14)
         alertMessage.textColor = new Color("#ff0000")
         return widget
     }
@@ -43,9 +43,10 @@ async function createWidget(card) {
     let dateTxt = df.string(currentTime)
 
     let mykiBalance = card["mykiBalance"]
-    let rangeTxt = ""
-    let rangeColor = ""
-    let balanceTxt = mykiBalance < 0 ? "- $" + mykiBalance.replace(/-/, "") : "$" + mykiBalance
+    // force balance to be 2 decimal places
+    let mykiBalanceValue = parseFloat(mykiBalance).toFixed(2).toString()
+    let balanceSign = mykiBalance < 0 ? "- $" + mykiBalance.replace(/-/, "") : "$"
+    let balanceTxt = balanceSign + mykiBalance
     let mykiPass = card["Product"] || []
 
     if (config.runsWithSiri) {
@@ -78,57 +79,71 @@ async function createWidget(card) {
             break;
     }
 
-    widget.backgroundColor = new Color("#4a525a")
+
+    // Set gradient background
+    let startColor = new Color("333434")
+    let midColor = new Color("333434")
+    let endColor = new Color("#ffffff")
+    let gradient = new LinearGradient()
+    gradient.colors = [startColor, midColor, endColor]
+    gradient.locations = [0.0, 0.72, 0.721]
+    widget.backgroundGradient = gradient
 
     widget.addSpacer()
 
     let mykiUpdateTime = widget.addStack()
-    let updateTxt = mykiUpdateTime.addText("Last updated ")
-    updateTxt.font = Font.boldSystemFont(10)
+    let updateTxt = mykiUpdateTime.addText("")
+    // updateTxt.font = new Font("AppleSDGothicNeo-bold", 10)
+    updateTxt.font = new Font("AppleSDGothicNeo-Light", 10)
     updateTxt.textColor = new Color("#eeeeee")
 
     let updateTime = mykiUpdateTime.addText(dateTxt)
-    updateTime.font = Font.boldSystemFont(10)
+    updateTime.font = new Font("AppleSDGothicNeo-bold", 10)
     updateTime.textColor = new Color("#eeeeee")
 
     let mykiTitle = widget.addStack()
     mykiTitle.centerAlignContent()
 
-    let mykiLogo = mykiTitle.addText("**** " + cardNumber.slice(-4))
-    mykiLogo.font = Font.boldSystemFont(20)
-    mykiLogo.textColor = new Color("#b6e037")
+    let mykiLogo = mykiTitle.addText("•••• " + cardNumber.slice(-5,-1) + " " + cardNumber.slice(-1))
+    mykiLogo.font = new Font("AppleSDGothicNeo-bold", 16)
+    mykiLogo.textColor = new Color("#ffffff")
     mykiTitle.addSpacer()
 
-    let mykiCode = mykiTitle.addText("Top Up >")
-    mykiCode.font = Font.boldSystemFont(20)
-    mykiCode.textColor = new Color("#ffcc00")
+    let mykiCode = mykiTitle.addText("Top Up")
+    let mykiSymbol = mykiTitle.addText(" >")
+    mykiCode.font = new Font("AppleSDGothicNeo-bold", 16)
+    mykiSymbol.font = new Font("AppleSDGothicNeo-bold", 16)
+    mykiSymbol.textColor = new Color("#d92b26")
+    mykiCode.textColor = new Color("#ffffff")
     mykiCode.url = "googlechrome://www.ptv.vic.gov.au/tickets/myki/#topup"
 
     widget.addSpacer()
 
-
     if (mykiPass.length > 0) {
         let middleViewTitle = widget.addStack()
         let moneyTitle = middleViewTitle.addText("myki money")
-        moneyTitle.font = Font.boldSystemFont(12)
+        moneyTitle.font = new Font("AppleSDGothicNeo-bold", 12)
         moneyTitle.textColor = new Color("#eeeeee")
         middleViewTitle.addSpacer()
 
         let passTitle = middleViewTitle.addText("myki pass")
-        passTitle.font = Font.boldSystemFont(12)
+        passTitle.font = new Font("AppleSDGothicNeo-bold", 12)
         passTitle.textColor = new Color("#eeeeee")
     }
 
     let middleView = widget.addStack()
-    let balanceTitle = middleView.addText(balanceTxt)
-    balanceTitle.font = Font.boldSystemFont(40)
-    balanceTitle.textColor = new Color("#eeeeee")
+    let balanceTitleSign = middleView.addText(balanceSign)
+    balanceTitleSign.textColor = new Color("#c2d840")
+    balanceTitleSign.font = new Font("AppleSDGothicNeo-Regular", 30)
+    let balanceTitle = middleView.addText(mykiBalanceValue)
+    balanceTitle.font = new Font("AppleSDGothicNeo-Regular", 30)
+    balanceTitle.textColor = new Color("#ffffff")
     middleView.addSpacer()
 
     if (mykiPass.length > 0) {
         let daysRemaining = mykiPass[0]["daysRemaining"].toString()
         let daysRemainingTitle = middleView.addText(daysRemaining)
-        daysRemainingTitle.font = Font.boldSystemFont(40)
+        daysRemainingTitle.font = new Font("AppleSDGothicNeo-bold", 40)
         daysRemainingTitle.textColor = new Color("#eeeeee")
     }
 
@@ -138,9 +153,15 @@ async function createWidget(card) {
 
     let bottomView = widget.addStack()
 
-    let expireDate = bottomView.addText("expiry date: " + card["mykiCardExpiryDate"])
-    expireDate.font = Font.boldSystemFont(10)
-    expireDate.textColor = new Color("#eeeeee")
+    let expireText = bottomView.addText("Expiry: ")
+    expireText.textColor = new Color("#000000")
+    expireText.font = new Font("AppleSDGothicNeo-regular", 10)
+    expire_df = new DateFormatter()
+    expire_df.useMediumDateStyle()
+    let expireDateStr = expire_df.string(new Date(card["mykiCardExpiryDate"]))
+    let expireDate = bottomView.addText(expireDateStr)
+    expireDate.font = new Font("AppleSDGothicNeo-bold", 10)
+    expireDate.textColor = new Color("#000000")
     bottomView.addSpacer()
 
     addSymbol({
@@ -157,8 +178,8 @@ async function createWidget(card) {
     })
     bottomView.addSpacer()
     let travelType = bottomView.addText(passengerTxt)
-    travelType.font = Font.boldSystemFont(10)
-    travelType.textColor = new Color("#eeeeee")
+    travelType.font = new Font("AppleSDGothicNeo-bold", 10)
+    travelType.textColor = new Color("#000000")
     widget.addSpacer()
 
     return widget
@@ -168,7 +189,7 @@ async function createWidget(card) {
 function addSymbol({
     symbol = 'applelogo',
     stack,
-    color = Color.white(),
+    color = Color.black(),
     size = 12,
 }) {
     const _sym = SFSymbol.named(symbol)

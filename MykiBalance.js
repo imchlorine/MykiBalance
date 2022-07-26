@@ -7,9 +7,9 @@
 // The passenger type (Concession, Child etc) may not accurate, cos I only have a full fare Card.
 // Important! This Widget is not affiliated to PTV or Myki. For personal use only.
 
-// let cardNumber = args.widgetParameter
+let cardNumber = args.widgetParameter
 
-let cardNumber = "308425387726027"
+//let cardNumber = "308425123456789"
 let ptvWebAuth = await getMykitoken()
 
 let card = await getCard()
@@ -79,7 +79,15 @@ async function createWidget(card) {
             break;
     }
 
-    widget.backgroundColor = new Color("#333434")
+
+    // Set gradient background
+    let startColor = new Color("333434")
+    let midColor = new Color("333434")
+    let endColor = new Color("#ffffff")
+    let gradient = new LinearGradient()
+    gradient.colors = [startColor, midColor, endColor]
+    gradient.locations = [0.0, 0.72, 0.721]
+    widget.backgroundGradient = gradient
 
     widget.addSpacer()
 
@@ -145,11 +153,14 @@ async function createWidget(card) {
     let bottomView = widget.addStack()
 
     let expireText = bottomView.addText("Expiry: ")
-    expireText.textColor = new Color("#ffffff")
+    expireText.textColor = new Color("#000000")
     expireText.font = Font.regularSystemFont(10)
-    let expireDate = bottomView.addText(card["mykiCardExpiryDate"])
+    expire_df = new DateFormatter()
+    expire_df.useMediumDateStyle()
+    let expireDateStr = expire_df.string(new Date(card["mykiCardExpiryDate"]))
+    let expireDate = bottomView.addText(expireDateStr)
     expireDate.font = Font.boldSystemFont(10)
-    expireDate.textColor = new Color("#ffffff")
+    expireDate.textColor = new Color("#000000")
     bottomView.addSpacer()
 
     addSymbol({
@@ -167,7 +178,7 @@ async function createWidget(card) {
     bottomView.addSpacer()
     let travelType = bottomView.addText(passengerTxt)
     travelType.font = Font.boldSystemFont(10)
-    travelType.textColor = new Color("#eeeeee")
+    travelType.textColor = new Color("#000000")
     widget.addSpacer()
 
     return widget
@@ -177,7 +188,7 @@ async function createWidget(card) {
 function addSymbol({
     symbol = 'applelogo',
     stack,
-    color = Color.white(),
+    color = Color.black(),
     size = 12,
 }) {
     const _sym = SFSymbol.named(symbol)

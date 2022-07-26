@@ -143,7 +143,7 @@ async function createWidget(card) {
     if (mykiPass.length > 0) {
         let daysRemaining = mykiPass[0]["daysRemaining"].toString()
         let daysRemainingTitle = middleView.addText(daysRemaining)
-        daysRemainingTitle.font = new Font("AppleSDGothicNeo-bold", 40)
+        daysRemainingTitle.font = new Font("AppleSDGothicNeo-Regular", 30)
         daysRemainingTitle.textColor = new Color("#eeeeee")
     }
 

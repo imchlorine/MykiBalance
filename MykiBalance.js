@@ -81,7 +81,6 @@ async function createWidget(card) {
 
     widget.backgroundColor = new Color("#4a525a")
 
-
     widget.addSpacer()
 
     let mykiUpdateTime = widget.addStack()
@@ -107,9 +106,6 @@ async function createWidget(card) {
     mykiCode.url = "googlechrome://www.ptv.vic.gov.au/tickets/myki/#topup"
 
     widget.addSpacer()
-
-
-
 
     if (mykiPass.length > 0) {
         let middleViewTitle = widget.addStack()

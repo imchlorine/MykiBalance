@@ -43,9 +43,12 @@ async function createWidget(card) {
     let dateTxt = df.string(currentTime)
 
     let mykiBalance = card["mykiBalance"]
+    // force balance to be 2 decimal places
+    let mykiBalanceValue = parseFloat(mykiBalance).toFixed(2).toString()
     let rangeTxt = ""
     let rangeColor = ""
-    let balanceTxt = mykiBalance < 0 ? "- $" + mykiBalance.replace(/-/, "") : "$" + mykiBalance
+    let balanceSign = mykiBalance < 0 ? "- $" + mykiBalance.replace(/-/, "") : "$"
+    let balanceTxt = balanceSign + mykiBalance
     let mykiPass = card["Product"] || []
 
     if (config.runsWithSiri) {
@@ -80,10 +83,11 @@ async function createWidget(card) {
 
     widget.backgroundColor = new Color("#4a525a")
 
+
     widget.addSpacer()
 
     let mykiUpdateTime = widget.addStack()
-    let updateTxt = mykiUpdateTime.addText("Last updated ")
+    let updateTxt = mykiUpdateTime.addText("")
     updateTxt.font = Font.boldSystemFont(10)
     updateTxt.textColor = new Color("#eeeeee")
 
@@ -94,9 +98,9 @@ async function createWidget(card) {
     let mykiTitle = widget.addStack()
     mykiTitle.centerAlignContent()
 
-    let mykiLogo = mykiTitle.addText("**** " + cardNumber.slice(-4))
+    let mykiLogo = mykiTitle.addText("•••• " + cardNumber.slice(-5,-1) + " " + cardNumber.slice(-1))
     mykiLogo.font = Font.boldSystemFont(20)
-    mykiLogo.textColor = new Color("#b6e037")
+    mykiLogo.textColor = new Color("#ffffff")
     mykiTitle.addSpacer()
 
     let mykiCode = mykiTitle.addText("Top Up >")
@@ -105,6 +109,8 @@ async function createWidget(card) {
     mykiCode.url = "googlechrome://www.ptv.vic.gov.au/tickets/myki/#topup"
 
     widget.addSpacer()
+
+
 
 
     if (mykiPass.length > 0) {
@@ -120,9 +126,12 @@ async function createWidget(card) {
     }
 
     let middleView = widget.addStack()
-    let balanceTitle = middleView.addText(balanceTxt)
-    balanceTitle.font = Font.boldSystemFont(40)
-    balanceTitle.textColor = new Color("#eeeeee")
+    let balanceTitleSign = middleView.addText(balanceSign)
+    balanceTitleSign.textColor = new Color("#c2d840")
+    balanceTitleSign.font = Font.mediumSystemFont(30)
+    let balanceTitle = middleView.addText(mykiBalanceValue)
+    balanceTitle.font = Font.boldSystemFont(30)
+    balanceTitle.textColor = new Color("#ffffff")
     middleView.addSpacer()
 
     if (mykiPass.length > 0) {
@@ -138,9 +147,12 @@ async function createWidget(card) {
 
     let bottomView = widget.addStack()
 
-    let expireDate = bottomView.addText("expiry date: " + card["mykiCardExpiryDate"])
+    let expireText = bottomView.addText("Expiry: ")
+    expireText.textColor = new Color("#ffffff")
+    expireText.font = Font.regularSystemFont(10)
+    let expireDate = bottomView.addText(card["mykiCardExpiryDate"])
     expireDate.font = Font.boldSystemFont(10)
-    expireDate.textColor = new Color("#eeeeee")
+    expireDate.textColor = new Color("#ffffff")
     bottomView.addSpacer()
 
     addSymbol({

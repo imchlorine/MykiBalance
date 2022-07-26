@@ -7,9 +7,9 @@
 // The passenger type (Concession, Child etc) may not accurate, cos I only have a full fare Card.
 // Important! This Widget is not affiliated to PTV or Myki. For personal use only.
 
-let cardNumber = args.widgetParameter
+// let cardNumber = args.widgetParameter
 
-//let cardNumber = "308425123456789"
+let cardNumber = "308425387726027"
 let ptvWebAuth = await getMykitoken()
 
 let card = await getCard()
@@ -79,7 +79,7 @@ async function createWidget(card) {
             break;
     }
 
-    widget.backgroundColor = new Color("#4a525a")
+    widget.backgroundColor = new Color("#333434")
 
     widget.addSpacer()
 
@@ -100,9 +100,12 @@ async function createWidget(card) {
     mykiLogo.textColor = new Color("#ffffff")
     mykiTitle.addSpacer()
 
-    let mykiCode = mykiTitle.addText("Top Up >")
+    let mykiCode = mykiTitle.addText("Top Up")
+    let mykiSymbol = mykiTitle.addText(" >")
     mykiCode.font = Font.boldSystemFont(20)
-    mykiCode.textColor = new Color("#ffcc00")
+    mykiSymbol.font = Font.boldSystemFont(20)
+    mykiSymbol.textColor = new Color("#d92b26")
+    mykiCode.textColor = new Color("#ffffff")
     mykiCode.url = "googlechrome://www.ptv.vic.gov.au/tickets/myki/#topup"
 
     widget.addSpacer()

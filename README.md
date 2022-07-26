@@ -6,7 +6,7 @@ Fetch Myki Balance with Scriptable, add to iOS 14 Widget.
 
 The passenger type (Full Fare, Concession, Child etc) may not accurate, feel free to let me know how to fix them
 
-## How to add MykiBalance Widget to my iOS14?
+## How to add MykiBalance Widget to my iOS?
 
 1. Download [Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188?ign-mpt=uo%3D4) from App Store
 

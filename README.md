@@ -1,7 +1,9 @@
 # MykiBalance  
 Fetch Myki Balance with Scriptable, add to iOS Widget.    
 
-
+- Fetch PTV Timetable Widget visit: [Timetable](https://github.com/imchlorine/PTVTimetable.git)
+  
+  
 **Important! This Widget is not affiliated to PTV or Myki. For personal use only.**
 
 The passenger type (Full Fare, Concession, Child etc) may not accurate, feel free to let me know how to fix them

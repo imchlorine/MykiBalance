@@ -1,16 +1,27 @@
-// Myki Balance V2.0
-// Run on Scriptable
-// Created by Ricky Li on 2020/10/12
-// Last modified on 2021/02/08
-// https://github.com/imchlorine/MykiBalance.git
-// This Script is used for feching Myki Balance from MyKi website.
-// The passenger type (Concession, Child etc) may not accurate, cos I only have a full fare Card.
-// Important! This Widget is not affiliated to PTV or Myki. For personal use only.
+/**
+ * Myki Balance V2.0
+ * Run on Scriptable
+ * Created by Ricky Li on 2020/10/12
+ * Last modified on 2022/12/09
+ * https://github.com/imchlorine/MykiBalance.git
+ * 
+ * This Script is used for feching Myki Balance from MyKi website.
+ * 
+ * For fetching PTV Timetable Widget visit:
+ * https://github.com/imchlorine/PTVTimetable.git
+ * 
+ * The passenger type (Concession, Child etc) may not accurate, cos I only have a full fare Card.
+ * Important! This Widget is not affiliated to PTV or Myki. For personal use only.
+ */
 
+
+// ================================
+// ================================
+// Do not edit the code below
 let cardNumber = args.widgetParameter
-
-//let cardNumber = "308425123456789"
+//let cardNumber = "308420123456789"
 let ptvWebAuth = await getMykitoken()
+console.log(ptvWebAuth)
 
 let card = await getCard()
 
@@ -104,7 +115,7 @@ async function createWidget(card) {
     let mykiTitle = widget.addStack()
     mykiTitle.centerAlignContent()
 
-    let mykiLogo = mykiTitle.addText("•••• " + cardNumber.slice(-5,-1) + " " + cardNumber.slice(-1))
+    let mykiLogo = mykiTitle.addText("•••• " + cardNumber.slice(-5, -1) + " " + cardNumber.slice(-1))
     mykiLogo.font = new Font("AppleSDGothicNeo-bold", 16)
     mykiLogo.textColor = new Color("#ffffff")
     mykiTitle.addSpacer()
@@ -119,6 +130,7 @@ async function createWidget(card) {
 
     widget.addSpacer()
 
+
     if (mykiPass.length > 0) {
         let middleViewTitle = widget.addStack()
         let moneyTitle = middleViewTitle.addText("myki money")
@@ -132,18 +144,15 @@ async function createWidget(card) {
     }
 
     let middleView = widget.addStack()
-    let balanceTitleSign = middleView.addText(balanceSign)
-    balanceTitleSign.textColor = new Color("#c2d840")
-    balanceTitleSign.font = new Font("AppleSDGothicNeo-Regular", 30)
-    let balanceTitle = middleView.addText(mykiBalanceValue)
-    balanceTitle.font = new Font("AppleSDGothicNeo-Regular", 30)
-    balanceTitle.textColor = new Color("#ffffff")
+    let balanceTitle = middleView.addText(balanceTxt)
+    balanceTitle.font = new Font("AppleSDGothicNeo-bold", 40)
+    balanceTitle.textColor = new Color("#c2d840")
     middleView.addSpacer()
 
     if (mykiPass.length > 0) {
         let daysRemaining = mykiPass[0]["daysRemaining"].toString()
         let daysRemainingTitle = middleView.addText(daysRemaining)
-        daysRemainingTitle.font = new Font("AppleSDGothicNeo-Regular", 30)
+        daysRemainingTitle.font = new Font("AppleSDGothicNeo-bold", 40)
         daysRemainingTitle.textColor = new Color("#eeeeee")
     }
 
